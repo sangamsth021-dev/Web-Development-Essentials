@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Member Signup Form</title>
+</head>
+<body>
+
+  <h2>Member Signup Form</h2>
+
+  <form action="#" method="post">
+
+    <label for="fullname">Full Name:</label><br>
+    <input type="text" id="fullname" name="fullname" placeholder="Your full name" required><br><br>
+
+    <label for="email">Email Address:</label><br>
+    <input type="email" id="email" name="email" placeholder="example@gmail.com" required><br><br>
+
+    <label for="password">Create Password:</label><br>
+    <input type="password" id="password" name="password" placeholder="Minimum 8 characters" required><br><br>
+
+    <!-- Gender -->
+    <label>Gender:</label><br>
+    <input type="radio" id="male" name="gender" value="Male" required> Male
+    <input type="radio" id="female" name="gender" value="Female"> Female
+    <input type="radio" id="other" name="gender" value="Other"> Other<br><br>
+
+    <!-- Interests -->
+    <label>Interests:</label><br>
+    <input type="checkbox" name="interests" value="Coding"> Coding
+    <input type="checkbox" name="interests" value="Gaming"> Gaming
+    <input type="checkbox" name="interests" value="Traveling"> Traveling
+    <input type="checkbox" name="interests" value="Photography"> Photography<br><br>
+
+    <label for="country">Select Country:</label><br>
+    <select id="country" name="country" required>
+      <option value="">-- Choose your country --</option>
+      <option value="India">India</option>
+      <option value="Canada">Canada</option>
+      <option value="Germany">Germany</option>
+      <option value="Japan">Japan</option>
+    </select><br><br>
+
+    <label for="about">Short Bio:</label><br>
+    <textarea id="about" name="about" rows="4" cols="40" placeholder="Describe Yourself in short..."></textarea><br><br>
+
+    <input type="submit" value="Sign Up">
+    <input type="reset" value="Clear">
+  </form>
+
+</body>
+</html>
