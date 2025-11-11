@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Validation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #83f5f5;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .form-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #555;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+        input:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+        }
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-top: 1rem;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .error {
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+        .success {
+            color: #28a745;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+        #successMsg {
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 4px;
+            text-align: center;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Registration Form</h2>
+        <form id="myForm">
+            <div>
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+                <div id="usernameError" class="error"></div>
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+                <div id="passwordMsg"></div>
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <div id="emailError" class="error"></div>
+            </div>
+            <div>
+                <label for="phone">Phone Number:</label>
+                <input type="tel" id="phone" name="phone" required>
+                <div id="phoneError" class="error"></div>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+        <div id="successMsg" class="success"></div>
+    </div>
+
+    <script>
+        document.getElementById('myForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            let isValid = true;
+
+            // Clear previous messages
+            document.querySelectorAll('.error, #passwordMsg').forEach(el => {
+                el.textContent = '';
+                el.className = '';
+            });
+            document.getElementById('successMsg').style.display = 'none';
+
+            // Username validation
+            const username = document.getElementById('username').value.trim();
+            const usernameError = document.getElementById('usernameError');
+            if (!username) {
+                usernameError.textContent = 'Username must not be empty or numeric';
+                usernameError.className = 'error';
+                isValid = false;
+            } else if (/^\d+$/.test(username)) {
+                usernameError.textContent = 'Username must not be empty or numeric';
+                usernameError.className = 'error';
+                isValid = false;
+            }
+
+            // Password validation
+            const password = document.getElementById('password').value;
+            const passwordMsg = document.getElementById('passwordMsg');
+            const hasUpper = /[A-Z]/.test(password);
+            const hasLower = /[a-z]/.test(password);
+            const hasDigit = /\d/.test(password);
+            const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+            const isLongEnough = password.length >= 8;
+
+            if (hasUpper && hasLower && hasDigit && hasSpecial && isLongEnough) {
+                passwordMsg.textContent = 'Strong password';
+                passwordMsg.className = 'success';
+            } else {
+                passwordMsg.textContent = 'Weak password';
+                passwordMsg.className = 'error';
+                isValid = false;
+            }
+
+            // Email validation
+            const email = document.getElementById('email').value;
+            const emailRegex = /^[\w.-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+            const emailError = document.getElementById('emailError');
+            if (!emailRegex.test(email)) {
+                emailError.textContent = 'Invalid email address';
+                emailError.className = 'error';
+                isValid = false;
+            }
+
+            // Phone validation
+            const phone = document.getElementById('phone').value;
+            const phoneError = document.getElementById('phoneError');
+            if (!/^\d{10}$/.test(phone)) {
+                phoneError.textContent = 'Phone number must be 10 digits and numeric';
+                phoneError.className = 'error';
+                isValid = false;
+            }
+
+            // If all valid, show success
+            if (isValid) {
+                document.getElementById('successMsg').textContent = 'Form submitted successfully';
+                document.getElementById('successMsg').style.display = 'block';
+                // Proceed with submission (e.g., store or send data)
+                console.log('Form submitted:', {
+                    username: username,
+                    password: password,
+                    email: email,
+                    phone: phone
+                });
+            }
+        });
+    </script>
+</body>
+</html>
